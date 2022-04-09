@@ -287,21 +287,24 @@
           <div class="mt-1">
             <div class="h6"><i class="far fa-envelope pe-2 text-muted" style="width:24px;opacity:0.85;"></i> asger.thyregod@gmail.com</div>
           </div>
-          <div class="mt-5 d-print-none"><form action="https://formspree.io/your@email.com" method="POST">
-          <div class="form-outline mb-4">
-            <input type="text" id="name" class="form-control" required/>
-            <label class="form-label" for="name">Name</label>
-          </div>
-          <div class="form-outline mb-4">
-            <input type="email" id="email" class="form-control" required/>
-            <label class="form-label" for="email">Email address</label>
-          </div>
-          <div class="form-outline mb-4">
-            <textarea class="form-control" style="resize: none;" id="message" rows="4" required></textarea>
-            <label class="form-label" for="message">Message</label>
-          </div>
-          <button class="btn btn-info btn-block mb-4" type="submit">Send</button>
-          </form>
+          <div class="mt-5 d-print-none">
+            <form>
+            <!--<form action="https://formspree.io/your@email.com" method="POST">-->
+              <div class="form-outline mb-4">
+                <input type="text" id="name" class="form-control" required/>
+                <label class="form-label" for="name">Name</label>
+              </div>
+              <div class="form-outline mb-4">
+                <input type="email" id="email" class="form-control" required/>
+                <label class="form-label" for="email">Email address</label>
+              </div>
+              <div class="form-outline mb-4">
+                <textarea class="form-control" style="resize: none;" id="message" rows="4" required></textarea>
+                <label class="form-label" for="message">Message</label>
+              </div>
+              <button class="btn btn-info btn-block mb-4" id="sendBtn" onclick="DisplayError()" >Send</button>
+              <span style="color:red" id="sendErrorMessage"></span>
+            </form>
           </div>
         </div>
         <div class="col-md-7 d-print-none" data-aos="zoom-in" data-aos-delay="100"><iframe src="https://maps.google.com/maps?q=Copenhagen&t=&z=13&ie=UTF8&iwloc=&output=embed" width="500" height="400" style="border:0;width:100%;" allowfullscreen="" loading="lazy"></iframe></div>
