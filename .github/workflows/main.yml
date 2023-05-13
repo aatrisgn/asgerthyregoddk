@@ -23,6 +23,7 @@ jobs:
         creds: ${{ secrets.AZURE_CREDENTIALS }}
 
   deploy-test-infrastructure:
+    needs: build
     name: Deploy infrastructure to Test
     runs-on: ubuntu-latest
     steps:
@@ -52,6 +53,7 @@ jobs:
         failOnStdErr: false
 
   deploy-prod-infrastructure:
+    needs: deploy-test-infrastructure
     name: Deploy infrastructure to Prod
     runs-on: ubuntu-latest
     steps:
