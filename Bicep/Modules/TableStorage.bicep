@@ -10,7 +10,7 @@ param location string = resourceGroup().location
 // Storage account
 resource storageAccount 'Microsoft.Storage/storageAccounts@2022-09-01' = {
   location: location
-  name:'asgerthyregoddkstorage${toLower(deploymentEnvironment)}'
+  name:'atdkstorage${toLower(deploymentEnvironment)}'
   sku:{
     name: 'Standard_LRS'
   }
