@@ -11,7 +11,15 @@ on:
       - main
 
 jobs:
-  build-and-deploy:
+  build:
+    name: Build application
+    runs-on: ubuntu-latest
+      steps:
+
+        # Checkout code
+      - uses: actions/checkout@main
+  deploy-test-infrastructure:
+    name: Deploy infrastructure to Test
     runs-on: ubuntu-latest
     steps:
 
@@ -39,6 +47,19 @@ jobs:
         parameters: 'deploymentEnvironment=TST'
         failOnStdErr: false
 
+  deploy-prod-infrastructure:
+    name: Deploy infrastructure to Prod
+    runs-on: ubuntu-latest
+    steps:
+
+      # Checkout code
+    - uses: actions/checkout@main
+
+      # Log into Azure
+    - uses: azure/login@v1
+      with:
+        creds: ${{ secrets.AZURE_CREDENTIALS }}
+    
     - name: Deploy Prod Infrastructure
       uses: azure/arm-deploy@v1
       with:
