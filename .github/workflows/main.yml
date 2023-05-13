@@ -27,7 +27,7 @@ jobs:
       uses: azure/arm-deploy@v1
       with:
         subscriptionId: ${{ secrets.AZURE_SUBSCRIPTION }}
-        resourceGroupName: ${{ secrets.AZURE_RG }}
+        resourceGroupName: '${{ secrets.AZURE_RG }}-TST'
         template: Bicep/main.bicep
         parameters: 'deploymentEnvironment=TST'
         failOnStdErr: false
@@ -36,7 +36,7 @@ jobs:
       uses: azure/arm-deploy@v1
       with:
         subscriptionId: ${{ secrets.AZURE_SUBSCRIPTION }}
-        resourceGroupName: ${{ secrets.AZURE_RG }}
+        resourceGroupName: '${{ secrets.AZURE_RG }}-PRD'
         template: Bicep/main.bicep
         parameters: 'deploymentEnvironment=PRD'
         failOnStdErr: false
