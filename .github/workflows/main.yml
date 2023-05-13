@@ -15,9 +15,13 @@ jobs:
     name: Build application
     runs-on: ubuntu-latest
       steps:
-
         # Checkout code
       - uses: actions/checkout@main
+
+      - uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
   deploy-test-infrastructure:
     name: Deploy infrastructure to Test
     runs-on: ubuntu-latest
