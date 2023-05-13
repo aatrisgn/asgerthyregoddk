@@ -22,11 +22,11 @@ jobs:
       with:
         creds: ${{ secrets.AZURE_CREDENTIALS }}
 
-    - name: Create Test Resource Group
-      uses: azure/CLI@v1
-      with:
-        inlineScript: |
-          az group create --location westeurope --name asgerthyregoddk-tst
+    # - name: Create Test Resource Group
+    #   uses: azure/CLI@v1
+    #   with:
+    #     inlineScript: |
+    #       az group create --location westeurope --name asgerthyregoddk-tst
 
       # Deploy Bicep file
     - name: Deploy Test Infrastructure
@@ -46,9 +46,3 @@ jobs:
         template: Bicep/main.bicep
         parameters: 'deploymentEnvironment=PRD'
         failOnStdErr: false
-
-    - name: Create Prod Resource Group
-      uses: azure/CLI@v1
-      with:
-        inlineScript: |
-          az group create --location westeurope --name asgerthyregoddk-prd
