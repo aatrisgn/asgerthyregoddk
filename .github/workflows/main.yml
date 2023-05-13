@@ -28,7 +28,7 @@ jobs:
       with:
         subscriptionId: ${{ secrets.AZURE_SUBSCRIPTION }}
         resourceGroupName: ${{ secrets.AZURE_RG }}
-        template: ../Bicep/main.bicep
+        template: Bicep/main.bicep
         parameters: 'deploymentEnvironment=TST'
         failOnStdErr: false
 
@@ -37,6 +37,6 @@ jobs:
       with:
         subscriptionId: ${{ secrets.AZURE_SUBSCRIPTION }}
         resourceGroupName: ${{ secrets.AZURE_RG }}
-        template: ../Bicep/main.bicep
+        template: Bicep/main.bicep
         parameters: 'deploymentEnvironment=PRD'
         failOnStdErr: false
