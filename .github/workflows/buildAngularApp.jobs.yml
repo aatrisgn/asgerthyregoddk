@@ -23,7 +23,7 @@ jobs:
         with:
           node-version: 'latest'
           cache: 'npm'
-          cache-dependency-path: '${{ inputs.workingdirectory}}'
+          cache-dependency-path: '${{ github.workspace }}/${{ inputs.workingdirectory}}'
         
       - name: Install angular
         run: npm install -g @angular/cli
