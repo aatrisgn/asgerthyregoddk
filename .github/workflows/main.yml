@@ -61,10 +61,12 @@ jobs:
       with:
         name: AngularApp
         path: ${{ github.workspace }}/Staging/AngularAppDirectory
-# unzip ${{ github.workspace }}/Staging/AngularAppDirectory/AngularApp.zip -d ${{ github.workspace }}/Staging/AngularAppDirectory/Content
+
+
+        # unzip ${{ github.workspace }}/Staging/AngularAppDirectory/AngularApp.zip -d ${{ github.workspace }}/Staging/AngularAppDirectory/Content
     - name: Unzip AngularAppArtifact
       run: |
-        cd ${{ github.workspace }}/Staging/AngularAppDirectory/AngularApp
+        cd ${{ github.workspace }}/Staging/AngularAppDirectory
         ls -a
 
     - name: Build And Deploy
