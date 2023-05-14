@@ -7,6 +7,9 @@ on:
       projectName:
         required: true
         type: string
+      buildType:
+        required: true
+        type: string
 
 jobs:
   build-angular-app:
@@ -15,6 +18,7 @@ jobs:
     env:
       working-directory: '${{ github.workspace }}/${{ inputs.workingdirectory}}'
       project-name: ${{inputs.projectName}}
+      build-output-path: '${{ github.workspace }}/publish'
     steps:
       - uses: actions/checkout@v2
 
@@ -39,19 +43,22 @@ jobs:
     
       - name: Build
         run: |
-          dotnet build ${{env.working-directory}}/${{ env.project-name }}/${{ env.project-name }}.csproj --no-restore
+          dotnet build ${{env.working-directory}}/${{ env.project-name }}/${{ env.project-name }}.csproj --configuration ${{ inputs.buildType }} --no-restore
           dotnet build ${{ env.working-directory }}/${{ env.project-name }}.Tests/${{ env.project-name }}.Tests.csproj
 
       - name: Test
         run: dotnet test ${{env.working-directory}}/${{ env.project-name }}.Tests/${{ env.project-name }}.Tests.csproj --no-restore
 
-      # - name: Zip distribution
-      #   working-directory: ${{env.working-directory}}
-      #   run: |
-      #     zip -r angularbuild.zip ${{ env.angular-dist-folder }}
+      - name: Publish
+        run: dotnet publish ${{env.working-directory}}/${{ env.project-name }}/${{ env.project-name }}.csproj --configuration ${{ inputs.buildType }} --no-restore --output ${{ env.build-output-path }}
 
-      # - name: Archive build
-      #   uses: actions/upload-artifact@v3
-      #   with:
-      #     name: AngularApp
-      #     path: '${{env.working-directory}}/${{ env.angular-dist-folder }}'
+      - name: Zip distribution
+        working-directory: ${{env.working-directory}}
+        run: |
+          zip -r functionApp.zip ${{ env.build-output-path }}
+
+      - name: Archive build
+        uses: actions/upload-artifact@v3
+        with:
+          name: FunctionApp
+          path: '${{ github.workspace }}/functionApp.zip'
