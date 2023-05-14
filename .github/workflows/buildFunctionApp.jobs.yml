@@ -56,7 +56,7 @@ jobs:
       - name: Zip distribution
         working-directory: ${{env.working-directory}}
         run: |
-          zip -r functionApp.zip ${{ env.build-output-path }}
+          zip -r ${{ github.workspace }}/functionApp.zip ${{ env.build-output-path }}
 
       - name: Archive build
         uses: actions/upload-artifact@v3
