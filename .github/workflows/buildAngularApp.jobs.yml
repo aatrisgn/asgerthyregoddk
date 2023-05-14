@@ -1,37 +1,36 @@
 on:
-    workflow_call:
-        inputs:
-            workingdirectory:
-                required: true
-                type: string
+  workflow_call:
+    inputs:
+      workingdirectory:
+        required: true
+        type: string
 
 jobs:
-    build-angular-app:
-        name: Build Angular App
-        runs-on: ubuntu-latest
-        steps:
-            - uses:
-                actions/checkout@v2
+  build-angular-app:
+    name: Build Angular App
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
 
-            - name: Navigating to working directory
-                run: |
-                    echo "working directory: ${{ inputs.workingdirectory }}"
-                    cd ${{ inputs.workingdirectory }}
-            
-            - name: Set up node.js
-                uses: actions/setup-node@v3.3.0
-                with:
-                    node-version: 'latest'
-                    cache: 'npm'
-            
-            - name: Install angular
-                run: npm install -g @angular/cli
+      - name: Navigating to working directory
+        run: |
+            echo "working directory: ${{ inputs.workingdirectory }}"
+            cd ${{ inputs.workingdirectory }}
+        
+      - uses: actions/setup-node@v3.3.0
+        name: Set up node.js
+        with:
+            node-version: 'latest'
+            cache: 'npm'
+        
+      - name: Install angular
+        run: npm install -g @angular/cli
 
-            - name: Install dependencies
-                run: npm install
+      - name: Install dependencies
+        run: npm install
 
-            name: Build Angular App
-                run: ng build --configuration=prod --output-path=pipelinebuild
-            
-            - name: Zip distribution
-                run: zip -r angularbuild.zip /pipelinebuild
+      - name: Build Angular App
+        run: ng build --configuration=prod --output-path=pipelinebuild
+        
+      - name: Zip distribution
+        run: zip -r angularbuild.zip /pipelinebuild

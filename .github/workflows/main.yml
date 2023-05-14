@@ -12,7 +12,7 @@ on:
 
 jobs:
   build:
-    uses: buildAngularApp.jobs.yml@main
+    uses: .github/workflows/buildAngularApp.jobs.yml@main
     with:
       workingdirectory: AngularApp
 
