@@ -21,6 +21,7 @@ jobs:
     with:
       workingdirectory: TGC.Site.API
       projectName: TGC.Site.API
+      artifactName: TGC.Site.API
 
   deploy-test-infrastructure:
     needs: [build-angular,build-functionapp]
