@@ -12,15 +12,9 @@ on:
 
 jobs:
   build:
-    name: Build application
-    runs-on: ubuntu-latest
-    steps:
-      # Checkout code
-    - uses: actions/checkout@main
-
-    - uses: azure/login@v1
-      with:
-        creds: ${{ secrets.AZURE_CREDENTIALS }}
+    uses: templates/jobs/buildAngularApp.jobs.yml@main
+    with:
+      workingdirectory: AngularApp
 
   deploy-test-infrastructure:
     needs: build
@@ -53,10 +47,10 @@ jobs:
               deploymentToken=$(az staticwebapp secrets list --name "asgerthyregoddk-tst-swa" --query "properties.apiKey")
               echo "somestate=$deploymentToken" >> "$GITHUB_ENV"
 
-    - name: Use the value
-      id: step_two
-      run: |
-          echo "${{ env.somestate }}"
+    # - name: Use the value
+    #   id: step_two
+    #   run: |
+    #       echo "${{ env.somestate }}"
 
   deploy-prod-infrastructure:
     needs: deploy-test-infrastructure
