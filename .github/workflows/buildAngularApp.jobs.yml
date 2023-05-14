@@ -9,6 +9,8 @@ jobs:
   build-angular-app:
     name: Build Angular App
     runs-on: ubuntu-latest
+    env:
+      working-directory: '${{ github.workspace }}/${{ inputs.workingdirectory}}'
     steps:
       - uses: actions/checkout@v2
 
@@ -23,16 +25,23 @@ jobs:
         with:
           node-version: 'latest'
           cache: 'npm'
-          cache-dependency-path: '${{ github.workspace }}/${{ inputs.workingdirectory}}'
+          cache-dependency-path: ${{env.working-directory}}
         
       - name: Install angular
+        working-directory: ${{env.working-directory}}
         run: npm install -g @angular/cli
 
       - name: Install dependencies
-        run: npm install
+        working-directory: ${{env.working-directory}}
+        run: |
+          npm install
 
       - name: Build Angular App
-        run: ng build --configuration=prod --output-path=pipelinebuild
+        working-directory: ${{env.working-directory}}
+        run: |
+          ng build --configuration=prod --output-path=pipelinebuild
         
       - name: Zip distribution
-        run: zip -r angularbuild.zip /pipelinebuild
+        working-directory: ${{env.working-directory}}
+        run: |
+          zip -r angularbuild.zip /pipelinebuild
