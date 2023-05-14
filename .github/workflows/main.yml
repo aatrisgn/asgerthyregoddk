@@ -23,7 +23,7 @@ jobs:
       projectName: TGC.Site.API
 
   deploy-test-infrastructure:
-    needs: build-angular
+    needs: [build-angular,build-functionapp]
     name: Deploy infrastructure to Test
     runs-on: ubuntu-latest
     steps:
