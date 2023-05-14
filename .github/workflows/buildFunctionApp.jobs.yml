@@ -1,0 +1,53 @@
+on:
+  workflow_call:
+    inputs:
+      workingdirectory:
+        required: true
+        type: string
+      projectName:
+        required: true
+        type: string
+
+jobs:
+  build-angular-app:
+    name: Build Angular App
+    runs-on: ubuntu-latest
+    env:
+      working-directory: '${{ github.workspace }}/${{ inputs.workingdirectory}}'
+      project-name: ${{inputs.projectName}}
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Navigating to working directory
+        run: |
+            echo "working directory: ${{ inputs.workingdirectory }}"
+            cd ${{ inputs.workingdirectory }}
+            ls -a
+      
+      - name: Setup NuGet
+        uses: NuGet/setup-nuget@v1.0.5
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: 6.0.x
+
+      - name: Restore dependencies
+        run: dotnet restore ${{ env.working-directory }}/${{ env.project-name }}/${{ env.project-name }}.csproj
+    
+      - name: Build
+        run: dotnet build ${{env.working-directory}}/${{ env.project-name }}/${{ env.project-name }}.csproj --no-restore
+
+      - name: Test
+        run: dotnet test ${{env.working-directory}}/${{ env.project-name }}/${{ env.project-name }}.tests.csproj --no-restore
+
+      # - name: Zip distribution
+      #   working-directory: ${{env.working-directory}}
+      #   run: |
+      #     zip -r angularbuild.zip ${{ env.angular-dist-folder }}
+
+      # - name: Archive build
+      #   uses: actions/upload-artifact@v3
+      #   with:
+      #     name: AngularApp
+      #     path: '${{env.working-directory}}/${{ env.angular-dist-folder }}'

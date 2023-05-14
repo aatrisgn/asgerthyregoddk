@@ -1,13 +1,13 @@
 on:
   workflow_call:
-    inputs:
-      workingdirectory:
-        required: true
-        type: string
+    # inputs:
+    #   workingdirectory:
+    #     required: true
+    #     type: string
 
 jobs:
-  build-angular-app:
-    name: Build Angular App
+  build-function-app:
+    name: Build Function App
     runs-on: ubuntu-latest
     env:
       working-directory: '${{ github.workspace }}/${{ inputs.workingdirectory}}'

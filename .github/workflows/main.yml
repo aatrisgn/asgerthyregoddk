@@ -11,13 +11,18 @@ on:
       - main
 
 jobs:
-  build:
+  build-angular:
+    uses: ./.github/workflows/buildAngularApp.jobs.yml
+    with:
+      workingdirectory: AngularApp
+
+  build-functionapp:
     uses: ./.github/workflows/buildAngularApp.jobs.yml
     with:
       workingdirectory: AngularApp
 
   deploy-test-infrastructure:
-    needs: build
+    needs: build-angular
     name: Deploy infrastructure to Test
     runs-on: ubuntu-latest
     steps:
