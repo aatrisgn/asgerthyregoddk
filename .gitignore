@@ -3,6 +3,7 @@ Bicep/main.json
 
 # Compiled output
 /dist
+/pipelinebuild
 /tmp
 /out-tsc
 /bazel-out
