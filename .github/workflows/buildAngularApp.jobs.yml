@@ -1,9 +1,9 @@
 on:
   workflow_call:
-    # inputs:
-    #   workingdirectory:
-    #     required: true
-    #     type: string
+    inputs:
+      workingdirectory:
+        required: true
+        type: string
 
 jobs:
   build-function-app:
