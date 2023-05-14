@@ -17,9 +17,10 @@ jobs:
       workingdirectory: AngularApp
 
   build-functionapp:
-    uses: ./.github/workflows/buildAngularApp.jobs.yml
+    uses: ./.github/workflows/buildFunctionApp.jobs.yml
     with:
-      workingdirectory: AngularApp
+      workingdirectory: TGC.Site.API
+      projectName: TGC.Site.API
 
   deploy-test-infrastructure:
     needs: build-angular
