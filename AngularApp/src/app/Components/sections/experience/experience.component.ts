@@ -27,22 +27,28 @@ export class ExperienceComponent implements OnInit {
 
 const experienceData = [
   {
-    "Title":"Senior IT-Architect",
-    "SubTitle":"Netcompony / TopDanmark",
-    "Timespan":"September, 2022 - Present",
-    "Summary":"Consultancy for Netcompany assisting TopDanmark with discovery and pre-analysis for modernizing their IT capabilities for commercial sector."
+    "Title":"Software Engineer",
+    "SubTitle":"cVation / Financial Software",
+    "Timespan":"January, 2023 - Present",
+    "Summary":"Working as a software engineer consultant assisting a large danish finansial software provider with creating and maintaning modern cloud-first SaaS solutions within Azure and .Net."
   },
   {
     "Title":"Senior IT-Architect",
-    "SubTitle":"Netcompony / Domstolsstyrelsen",
+    "SubTitle":"Netcompany / Financial institution",
+    "Timespan":"September, 2022 - January, 2023",
+    "Summary":"Consultant for Netcompany assisting a large danish financial institution with discovery and pre-analysis for modernizing their IT capabilities for commercial sector."
+  },
+  {
+    "Title":"Senior IT-Architect",
+    "SubTitle":"Netcompany / Government Agency",
     "Timespan":"December, 2021 - September, 2022",
-    "Summary":"Consultancy for Netcompany assisting Domstolsstyrelsen (Danish government agency for the danish courts) with maintaining the IT-systems for the civil court system. I have the technical resposibility for the whole system making sure to deliver on time and stable releases."
+    "Summary":"Consultant for Netcompany assisting a government agency with maintaning and developing their IT-systems and capabilities within .Net ecosystem and Windows server. Primary focus was assisting with making architectural decisions and defining roadmap / milestones."
   },
   {
     "Title":"IT Consultant",
-    "SubTitle":"Netcompany / Domstolsstyrelsen",
+    "SubTitle":"Netcompany / Government Agency",
     "Timespan":"August, 2019 - December, 2021",
-    "Summary":"Consultancy for Netcompany assisting Domstolsstyrelsen (Danish government agency for the danish courts) with maintaining the IT-systems for the civil court system."
+    "Summary":"Consultant for Netcompany assisting a government agency with maintaning and developing their IT-systems and capabilities within .Net ecosystem and Windows server. Primary focus was development and ensuring steady operation."
   },
   {
     "Title":"Software Developer",

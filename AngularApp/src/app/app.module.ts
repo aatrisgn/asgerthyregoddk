@@ -15,6 +15,7 @@ import { WelcomeComponent } from './Components/sections/welcome/welcome.componen
 import { ExperienceComponent } from './Components/sections/experience/experience.component';
 import { EducationComponent } from './Components/sections/education/education.component';
 import { CertificatesComponent } from './Components/sections/certificates/certificates.component';
+import { HobbiesComponent } from './Components/sections/hobbies/hobbies.component';
 
 
 @NgModule({
@@ -28,7 +29,8 @@ import { CertificatesComponent } from './Components/sections/certificates/certif
     WelcomeComponent,
     ExperienceComponent,
     EducationComponent,
-    CertificatesComponent
+    CertificatesComponent,
+    HobbiesComponent
   ],
   imports: [
     BrowserModule,
