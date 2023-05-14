@@ -8,7 +8,8 @@ on:
         required: true
         type: string
       buildType:
-        required: true
+        required: false
+        default: "release"
         type: string
 
 jobs:
