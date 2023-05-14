@@ -33,10 +33,14 @@ jobs:
           dotnet-version: 6.0.x
 
       - name: Restore dependencies
-        run: dotnet restore ${{ env.working-directory }}/${{ env.project-name }}/${{ env.project-name }}.csproj
+        run: |
+          dotnet restore ${{ env.working-directory }}/${{ env.project-name }}/${{ env.project-name }}.csproj
+          dotnet restore ${{ env.working-directory }}/${{ env.project-name }}.Tests/${{ env.project-name }}.Tests.csproj
     
       - name: Build
-        run: dotnet build ${{env.working-directory}}/${{ env.project-name }}/${{ env.project-name }}.csproj --no-restore
+        run: |
+          dotnet build ${{env.working-directory}}/${{ env.project-name }}/${{ env.project-name }}.csproj --no-restore
+          dotnet build ${{ env.working-directory }}/${{ env.project-name }}.Tests/${{ env.project-name }}.Tests.csproj
 
       - name: Test
         run: dotnet test ${{env.working-directory}}/${{ env.project-name }}.Tests/${{ env.project-name }}.Tests.csproj --no-restore
