@@ -11,6 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       working-directory: '${{ github.workspace }}/${{ inputs.workingdirectory}}'
+      angular-dist-folder: pipelinebuild
     steps:
       - uses: actions/checkout@v2
 
@@ -39,9 +40,15 @@ jobs:
       - name: Build Angular App
         working-directory: ${{env.working-directory}}
         run: |
-          ng build --configuration=production --output-path=pipelinebuild
+          ng build --configuration=production --output-path=${{ env.angular-dist-folder }}
         
       - name: Zip distribution
         working-directory: ${{env.working-directory}}
         run: |
-          zip -r angularbuild.zip /pipelinebuild
+          zip -r angularbuild.zip ${{ env.angular-dist-folder }}
+
+      - name: Archive build
+        uses: actions/upload-artifact@v3
+        with:
+          name: AngularApp
+          path: '${{env.working-directory}}/${{ env.angular-dist-folder }}'
