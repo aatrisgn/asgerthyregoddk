@@ -36,12 +36,6 @@ jobs:
       with:
         creds: ${{ secrets.AZURE_CREDENTIALS }}
 
-    # - name: Create Test Resource Group
-    #   uses: azure/CLI@v1
-    #   with:
-    #     inlineScript: |
-    #       az group create --location westeurope --name asgerthyregoddk-tst
-
       # Deploy Bicep file
     - name: Deploy Test Infrastructure
       uses: azure/arm-deploy@v1
@@ -50,7 +44,25 @@ jobs:
         resourceGroupName: '${{ secrets.AZURE_RG }}-TST'
         template: Bicep/main.bicep
         parameters: 'deploymentEnvironment=TST'
-        failOnStdErr: false
+    
+    - name: Create Test Resource Group
+      id: fetchSWAToken
+      uses: azure/CLI@v1
+      with:
+          inlineScript: |
+              deploymentToken=($az staticwebapp secrets list --name "asgerthyregoddk-tst-swa" --query "properties.apiKey")
+              echo "somestate=deploymentToken" >> "$GITHUB_ENV"
+              echo "::set-output name=somestatetest::$deploymentToken"
+
+    - name: Use the value
+      id: step_two
+      run: |
+          echo "${{ env.somestate }}"
+    
+    - name: Use the value
+      id: step_three
+      run: |
+          echo "${{ steps.fetchSWAToken.outputs.somestatetest }}"
 
   deploy-prod-infrastructure:
     needs: deploy-test-infrastructure
@@ -73,4 +85,3 @@ jobs:
         resourceGroupName: '${{ secrets.AZURE_RG }}-PRD'
         template: Bicep/main.bicep
         parameters: 'deploymentEnvironment=PRD'
-        failOnStdErr: false

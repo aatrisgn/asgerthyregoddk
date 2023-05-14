@@ -1,0 +1,51 @@
+on:
+    workflow_call:
+        inputs:
+            environmentName:
+                required: true
+                type: string
+
+jobs:
+    deploy-infrastructure:
+        needs: build
+        name: Deploy infrastructure to Test
+        runs-on: ubuntu-latest
+        environment: ${{ inputs.environmentName}}
+        # outputs:
+        #     swadeploymenttoken: ${{ steps.fetchSWAToken.outputs }}
+        steps:
+
+            # Checkout code
+        - uses: actions/checkout@main
+
+            # Log into Azure
+        - uses: azure/login@v1
+            with:
+            creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+        # - name: Create Test Resource Group
+        #   uses: azure/CLI@v1
+        #   with:
+        #     inlineScript: |
+        #       az group create --location westeurope --name asgerthyregoddk-tst
+
+            # Deploy Bicep file
+        - name: Deploy Test Infrastructure
+            uses: azure/arm-deploy@v1
+            with:
+            subscriptionId: ${{ secrets.AZURE_SUBSCRIPTION }}
+            resourceGroupName: '${{ secrets.AZURE_RG }}-${{ inputs.environmentName }}'
+            template: Bicep/main.bicep
+            parameters: 'deploymentEnvironment=${{ inputs.environmentName }}'
+
+        - name: Create Test Resource Group
+            id: fetchSWAToken
+            uses: azure/CLI@v1
+            with:
+                inlineScript: |
+                    deploymentToken=($az staticwebapp secrets list --name "asgerthyregoddk-${{ inputs.environmentName }}-swa" --query "properties.apiKey")
+                    echo "somestate=deploymentToken" >> "$GITHUB_ENV"
+        - name: Use the value
+            id: step_two
+            run: |
+                echo "${{ env.somestate }}"
