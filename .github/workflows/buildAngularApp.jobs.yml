@@ -7,7 +7,7 @@ on:
 
 jobs:
   build-function-app:
-    name: Build Function App
+    name: Build Angular App
     runs-on: ubuntu-latest
     env:
       working-directory: '${{ github.workspace }}/${{ inputs.workingdirectory}}'

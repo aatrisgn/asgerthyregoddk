@@ -10,7 +10,7 @@ on:
 
 jobs:
   build-angular-app:
-    name: Build Angular App
+    name: Build Function App
     runs-on: ubuntu-latest
     env:
       working-directory: '${{ github.workspace }}/${{ inputs.workingdirectory}}'
@@ -39,7 +39,7 @@ jobs:
         run: dotnet build ${{env.working-directory}}/${{ env.project-name }}/${{ env.project-name }}.csproj --no-restore
 
       - name: Test
-        run: dotnet test ${{env.working-directory}}/${{ env.project-name }}/${{ env.project-name }}.tests.csproj --no-restore
+        run: dotnet test ${{env.working-directory}}/${{ env.project-name }}.Tests/${{ env.project-name }}.Tests.csproj --no-restore
 
       # - name: Zip distribution
       #   working-directory: ${{env.working-directory}}
