@@ -21,9 +21,9 @@ jobs:
       - uses: actions/setup-node@v3.3.0
         name: Set up node.js
         with:
-            node-version: 'latest'
-            cache: 'npm'
-            cache-dependency-path: '$GITHUB_WORKSPACE/${{ inputs.workingdirectory}}'
+          node-version: 'latest'
+          cache: 'npm'
+          cache-dependency-path: '$GITHUB_WORKSPACE/${{ inputs.workingdirectory}}'
         
       - name: Install angular
         run: npm install -g @angular/cli
