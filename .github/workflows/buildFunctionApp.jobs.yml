@@ -19,6 +19,7 @@ jobs:
     env:
       working-directory: '${{ github.workspace }}/${{ inputs.workingdirectory}}'
       project-name: ${{inputs.projectName}}
+      build-folder: 'publish'
       build-output-path: '${{ github.workspace }}/publish'
     steps:
       - uses: actions/checkout@v2
@@ -56,7 +57,8 @@ jobs:
       - name: Zip distribution
         working-directory: ${{env.working-directory}}
         run: |
-          zip -r ${{ github.workspace }}/functionApp.zip ${{ env.build-output-path }}
+          cd ${{ github.workspace }}
+          zip -r ${{ github.workspace }}/functionApp.zip ${{ env.build-folder }}
 
       - name: Archive build
         uses: actions/upload-artifact@v3
