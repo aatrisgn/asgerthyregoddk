@@ -4,6 +4,9 @@ on:
       workingdirectory:
         required: true
         type: string
+      artifactName:
+        required: true
+        type: string
 
 jobs:
   build-function-app:
@@ -50,5 +53,5 @@ jobs:
       - name: Archive build
         uses: actions/upload-artifact@v3
         with:
-          name: AngularApp
+          name: ${{ inputs.artifactName}}
           path: '${{env.working-directory}}/${{ env.angular-dist-folder }}'

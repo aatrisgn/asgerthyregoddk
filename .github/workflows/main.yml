@@ -15,6 +15,7 @@ jobs:
     uses: ./.github/workflows/buildAngularApp.jobs.yml
     with:
       workingdirectory: AngularApp
+      artifactName: AngularApp
 
   build-functionapp:
     uses: ./.github/workflows/buildFunctionApp.jobs.yml
@@ -53,6 +54,33 @@ jobs:
           inlineScript: |
               deploymentToken=$(az staticwebapp secrets list --name "asgerthyregoddk-tst-swa" --query "properties.apiKey")
               echo "somestate=$deploymentToken" >> "$GITHUB_ENV"
+    
+    - name: Download a single artifact
+      uses: actions/download-artifact@v3
+      with:
+        name: AngularApp
+        path: ${{ github.workspace }}/Staging/AngularAppDirectory
+
+    - name: Unzip AngularAppArtifact
+      run: |
+        unzip ${{ github.workspace }}/Staging/AngularAppDirectory/AngularApp.zip -d ${{ github.workspace }}/Staging/AngularAppDirectory/Content
+
+    - name: Build And Deploy
+      id: builddeploy
+      uses: Azure/static-web-apps-deploy@v1
+      with:
+        azure_static_web_apps_api_token: ${{ env.somestate }}
+        # repo_token: ${{ secrets.GITHUB_TOKEN }} # Used for Github integrations (i.e. PR comments)
+        action: "upload"
+        ###### Repository/Build Configurations - These values can be configured to match your app requirements. ######
+        # For more information regarding Static Web App workflow configurations, please visit: https://aka.ms/swaworkflowconfig
+        app_location: "${{ github.workspace }}/Staging/AngularAppDirectory/Content" # App source code path
+        api_location: "" # Api source code path - optional
+        skip_app_build: true
+        skip_api_build: true
+        config_file_location: /assets
+        #output_location: "" # Built app content directory - optional
+        ###### End of Repository/Build Configurations ######
 
     # - name: Use the value
     #   id: step_two
