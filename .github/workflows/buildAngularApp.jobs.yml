@@ -16,6 +16,7 @@ jobs:
         run: |
             echo "working directory: ${{ inputs.workingdirectory }}"
             cd ${{ inputs.workingdirectory }}
+            ls -a
         
       - uses: actions/setup-node@v3.3.0
         name: Set up node.js
