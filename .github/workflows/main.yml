@@ -54,16 +54,18 @@ jobs:
           inlineScript: |
               deploymentToken=$(az staticwebapp secrets list --name "asgerthyregoddk-tst-swa" --query "properties.apiKey")
               echo "somestate=$deploymentToken" >> "$GITHUB_ENV"
+              echo "Fetched token."
     
     - name: Download a single artifact
       uses: actions/download-artifact@v3
       with:
         name: AngularApp
         path: ${{ github.workspace }}/Staging/AngularAppDirectory
-
+# unzip ${{ github.workspace }}/Staging/AngularAppDirectory/AngularApp.zip -d ${{ github.workspace }}/Staging/AngularAppDirectory/Content
     - name: Unzip AngularAppArtifact
       run: |
-        unzip ${{ github.workspace }}/Staging/AngularAppDirectory/AngularApp.zip -d ${{ github.workspace }}/Staging/AngularAppDirectory/Content
+        cd ${{ github.workspace }}/Staging/AngularAppDirectory/AngularApp
+        ls -a
 
     - name: Build And Deploy
       id: builddeploy
@@ -74,7 +76,7 @@ jobs:
         action: "upload"
         ###### Repository/Build Configurations - These values can be configured to match your app requirements. ######
         # For more information regarding Static Web App workflow configurations, please visit: https://aka.ms/swaworkflowconfig
-        app_location: "${{ github.workspace }}/Staging/AngularAppDirectory/Content" # App source code path
+        app_location: "${{ github.workspace }}/Staging/AngularAppDirectory/AngularApp" # App source code path
         api_location: "" # Api source code path - optional
         skip_app_build: true
         skip_api_build: true
