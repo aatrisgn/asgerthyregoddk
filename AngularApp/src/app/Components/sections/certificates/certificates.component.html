@@ -1,0 +1,16 @@
+<div class="shadow-1-strong bg-white my-5 p-5" id="certificates">
+    <div class="certificates-section">
+      <h2 class="h2 fw-light mb-4">Certificates</h2>
+      <div class="timeline">
+        <div *ngFor="let education of parsedCertificateData" class="timeline-card timeline-card-info" data-aos="fade-in" data-aos-delay="0">
+          <div class="timeline-head px-4 pt-3">
+            <div class="h5">{{education.Title}} <span class="text-muted h6">{{education.Subtitle}}</span></div>
+          </div>
+          <div class="timeline-body px-4 pb-4">
+            <div class="text-muted text-small mb-3">{{education.TimeSpan}}</div>
+            <div>{{education.Summary}}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+</div>

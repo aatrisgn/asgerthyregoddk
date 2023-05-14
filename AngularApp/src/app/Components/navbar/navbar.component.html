@@ -1,0 +1,15 @@
+<div class="container text-center text-lg-left">
+  <div class="pt-4 clearfix">
+    <h1 class="site-title mb-0">Asger Thyregod</h1>
+    <div class="site-nav"> 
+      <nav role="navigation">
+        <ul class="nav justify-content-center" >
+          <li *ngFor="let navbarItem of NavbarItems" class="nav-item">
+            <a class="nav-link" href="#{{navbarItem.Link}}" title="{{navbarItem.DisplayName}}">
+              <span class="menu-title">{{navbarItem.DisplayName}}</span></a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </div>
+</div>

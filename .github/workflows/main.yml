@@ -50,7 +50,7 @@ jobs:
       uses: azure/CLI@v1
       with:
           inlineScript: |
-              deploymentToken=($az staticwebapp secrets list --name "asgerthyregoddk-tst-swa" --query "properties.apiKey")
+              deploymentToken=$(az staticwebapp secrets list --name "asgerthyregoddk-tst-swa" --query "properties.apiKey")
               echo "somestate=$deploymentToken" >> "$GITHUB_ENV"
 
     - name: Use the value
