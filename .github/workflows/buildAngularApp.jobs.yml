@@ -39,7 +39,7 @@ jobs:
       - name: Build Angular App
         working-directory: ${{env.working-directory}}
         run: |
-          ng build --configuration=prod --output-path=pipelinebuild
+          ng build --configuration='prod' --output-path='pipelinebuild'
         
       - name: Zip distribution
         working-directory: ${{env.working-directory}}
