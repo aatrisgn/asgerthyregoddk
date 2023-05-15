@@ -28,6 +28,9 @@ jobs:
     needs: [build-angular,build-functionapp]
     name: Deploy infrastructure to Test
     runs-on: ubuntu-latest
+    environment: TST
+    outputs:
+      swa-token: ${{ steps.fetchSWAToken.outputs.deploymenttoken }}
     steps:
 
       # Checkout code
@@ -52,48 +55,56 @@ jobs:
       uses: azure/CLI@v1
       with:
           inlineScript: |
-              deploymentToken=$(az staticwebapp secrets list --name "asgerthyregoddk-tst-swa" --query "properties.apiKey" -o tsv)
-              echo "::add-mask::$deploymentToken" 
-              echo "somestate=$deploymentToken" >> "$GITHUB_ENV"
+              localdeploymentToken=$(az staticwebapp secrets list --name "asgerthyregoddk-tst-swa" --query "properties.apiKey" -o tsv)
+              echo "::add-mask::$localdeploymentToken" 
+              echo "deploymenttoken=$localdeploymentToken" >> "$GITHUB_ENV"
               echo "Fetched token."
     
-    - name: Download a single artifact
-      uses: actions/download-artifact@v3
-      with:
-        name: AngularApp
-        path: ${{ github.workspace }}/Staging/AngularAppDirectory
+  deploy-tst-webapp:
+    uses: ./.github/workflows/deployWebApp.jobs.yml
+    needs: deploy-test-infrastructure
+    with:
+      artifact-name: AngularApp
+      swa-token: ${{ needs.deploy-test-infrastructure.outputs.swa-token }}
 
-    - name: Unzip AngularAppArtifact
-      run: |
-        cd ${{ github.workspace }}/Staging/AngularAppDirectory
-        ls -a
+    # - name: Download a single artifact
+    #   uses: actions/download-artifact@v3
+    #   with:
+    #     name: AngularApp
+    #     path: ${{ github.workspace }}/Staging/AngularAppDirectory
 
-    - name: Build And Deploy
-      id: builddeploy
-      uses: Azure/static-web-apps-deploy@v1
-      with:
-        azure_static_web_apps_api_token: ${{ env.somestate }}
-        # repo_token: ${{ secrets.GITHUB_TOKEN }} # Used for Github integrations (i.e. PR comments)
-        action: "upload"
-        ###### Repository/Build Configurations - These values can be configured to match your app requirements. ######
-        # For more information regarding Static Web App workflow configurations, please visit: https://aka.ms/swaworkflowconfig
-        app_location: "${{ github.workspace }}/Staging/AngularAppDirectory" # App source code path
-        api_location: "" # Api source code path - optional
-        skip_app_build: true
-        skip_api_build: true
-        config_file_location: ${{ github.workspace }}/Staging/AngularAppDirectory/assets
-        #output_location: "" # Built app content directory - optional
-        ###### End of Repository/Build Configurations ######
-
-    # - name: Use the value
-    #   id: step_two
+    # - name: Unzip AngularAppArtifact
     #   run: |
-    #       echo "${{ env.somestate }}"
+    #     cd ${{ github.workspace }}/Staging/AngularAppDirectory
+    #     ls -a
+
+    # - name: Build And Deploy
+    #   id: builddeploy
+    #   uses: Azure/static-web-apps-deploy@v1
+    #   with:
+    #     azure_static_web_apps_api_token: ${{ env.somestate }}
+    #     # repo_token: ${{ secrets.GITHUB_TOKEN }} # Used for Github integrations (i.e. PR comments)
+    #     action: "upload"
+    #     ###### Repository/Build Configurations - These values can be configured to match your app requirements. ######
+    #     # For more information regarding Static Web App workflow configurations, please visit: https://aka.ms/swaworkflowconfig
+    #     app_location: "${{ github.workspace }}/Staging/AngularAppDirectory" # App source code path
+    #     api_location: "" # Api source code path - optional
+    #     skip_app_build: true
+    #     skip_api_build: true
+    #     config_file_location: ${{ github.workspace }}/Staging/AngularAppDirectory/assets
+    #     #output_location: "" # Built app content directory - optional
+    #     ###### End of Repository/Build Configurations ######
+
+    # # - name: Use the value
+    # #   id: step_two
+    # #   run: |
+    # #       echo "${{ env.somestate }}"
 
   deploy-prod-infrastructure:
     needs: deploy-test-infrastructure
     name: Deploy infrastructure to Prod
     runs-on: ubuntu-latest
+    environment: PRD
     steps:
 
       # Checkout code
