@@ -56,10 +56,11 @@ jobs:
       with: #echo "::add-mask::$localdeploymentToken" 
           inlineScript: |
               localdeploymentToken=$(az staticwebapp secrets list --name "asgerthyregoddk-tst-swa" --query "properties.apiKey" -o tsv)
-              echo "deploymenttoken=$localdeploymentToken" >> "$GITHUB_ENV"
+              echo "deploymenttoken=$localdeploymentToken" >> "$GITHUB_OUTPUT"
               echo "Fetched token."
     
   deploy-tst-webapp:
+    name: Deploy Angular App to Test
     uses: ./.github/workflows/deployWebApp.jobs.yml
     needs: deploy-test-infrastructure
     with:

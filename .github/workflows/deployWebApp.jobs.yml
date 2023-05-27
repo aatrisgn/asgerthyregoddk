@@ -10,15 +10,14 @@ on:
 
 jobs:
   build-angular-app:
-    name: Build Function App
     runs-on: ubuntu-latest
     env:
       local-working-directory: ${{ github.workspace }}/Staging/AngularAppDirectory
     steps:
-      - name: Masking inputs
-        run: |
-          swa-token=$(cat $GITHUB_EVENT_PATH | jq -r '.inputs.swa-token' )
-          echo "::add-mask::$swa-token"
+      #- name: Masking inputs
+      #  run: |
+      #    swa-token=$(cat $GITHUB_EVENT_PATH | jq -r '.inputs.swa-token' )
+      #    echo "::add-mask::$swa-token"
 
       - name: Download a single artifact
         uses: actions/download-artifact@v3
