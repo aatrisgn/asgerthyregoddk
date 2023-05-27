@@ -7,9 +7,6 @@ on:
       SWA-name:
         required: true
         type: string
-    secrets:
-      testToken:
-        required: true
 
 jobs:
   build-angular-app:
@@ -32,7 +29,6 @@ jobs:
                 echo "::add-mask::$localdeploymentToken"
                 echo "deploymenttoken=$localdeploymentToken" >> "$GITHUB_OUTPUT"
                 echo "Fetched token."
-                echo "${{ secrets.testToken }}"
 
       - name: Download a single artifact
         uses: actions/download-artifact@v3
