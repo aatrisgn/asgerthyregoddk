@@ -53,10 +53,9 @@ jobs:
     - name: Fetch SWA Token
       id: fetchSWAToken
       uses: azure/CLI@v1
-      with:
+      with: #echo "::add-mask::$localdeploymentToken" 
           inlineScript: |
               localdeploymentToken=$(az staticwebapp secrets list --name "asgerthyregoddk-tst-swa" --query "properties.apiKey" -o tsv)
-              echo "::add-mask::$localdeploymentToken" 
               echo "deploymenttoken=$localdeploymentToken" >> "$GITHUB_ENV"
               echo "Fetched token."
     
@@ -122,3 +121,10 @@ jobs:
         resourceGroupName: '${{ secrets.AZURE_RG }}-PRD'
         template: Bicep/main.bicep
         parameters: 'deploymentEnvironment=PRD'
+
+  deploy-prd-webapp:
+    uses: ./.github/workflows/deployWebApp.jobs.yml
+    needs: [deploy-tst-webapp, deploy-prod-infrastructure]
+    with:
+      artifact-name: AngularApp
+      swa-token: ${{ needs.deploy-prod-infrastructure.outputs.swa-token }}
