@@ -58,7 +58,6 @@ jobs:
     with:
       artifact-name: AngularApp
       SWA-name: 'asgerthyregoddk-tst-swa'
-      testToken: 'lalala'
 
   deploy-prod-infrastructure:
     needs: deploy-test-infrastructure
@@ -91,4 +90,3 @@ jobs:
     with:
       artifact-name: AngularApp
       SWA-name: 'asgerthyregoddk-prd-swa'
-      testToken: 'lalala'
