@@ -16,10 +16,6 @@ jobs:
     outputs:
       swa-token: ${{ steps.fetchSWAToken.outputs.deploymenttoken }}
     steps:
-      - uses: azure/login@v1
-        with:
-          creds: ${{ secrets.AZURE_CREDENTIALS }}
-          
       - name: Fetch SWA Token
         id: fetchSWAToken
         uses: azure/CLI@v1
