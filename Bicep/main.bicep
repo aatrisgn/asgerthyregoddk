@@ -22,3 +22,5 @@ module swaModule 'Modules/StaticWebApp.bicep' = {
     location:location
   }
 }
+
+output swaName string = swaModule.outputs.swaName

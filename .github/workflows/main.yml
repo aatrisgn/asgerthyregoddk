@@ -30,7 +30,7 @@ jobs:
     runs-on: ubuntu-latest
     environment: TST
     outputs:
-      swa-token: ${{ steps.fetchSWAToken.outputs.deploymenttoken }}
+      swa-name: ${{ steps.fetchSWAToken.outputs.deploymenttoken }}
     steps:
 
       # Checkout code
@@ -50,56 +50,13 @@ jobs:
         template: Bicep/main.bicep
         parameters: 'deploymentEnvironment=TST'
     
-    - name: Fetch SWA Token
-      id: fetchSWAToken
-      uses: azure/CLI@v1
-      with: 
-          inlineScript: | #echo "::add-mask::$localdeploymentToken" 
-              localdeploymentToken=$(az staticwebapp secrets list --name "asgerthyregoddk-tst-swa" --query "properties.apiKey" -o tsv)
-              
-              echo "deploymenttoken=$localdeploymentToken" >> "$GITHUB_OUTPUT"
-              echo "Fetched token."
-    
   deploy-tst-webapp:
     name: Deploy Angular App to Test
     uses: ./.github/workflows/deployWebApp.jobs.yml
     needs: deploy-test-infrastructure
     with:
       artifact-name: AngularApp
-      WEBHOOK_TOKEN: ${{ needs.deploy-test-infrastructure.outputs.swa-token }}
-
-    # - name: Download a single artifact
-    #   uses: actions/download-artifact@v3
-    #   with:
-    #     name: AngularApp
-    #     path: ${{ github.workspace }}/Staging/AngularAppDirectory
-
-    # - name: Unzip AngularAppArtifact
-    #   run: |
-    #     cd ${{ github.workspace }}/Staging/AngularAppDirectory
-    #     ls -a
-
-    # - name: Build And Deploy
-    #   id: builddeploy
-    #   uses: Azure/static-web-apps-deploy@v1
-    #   with:
-    #     azure_static_web_apps_api_token: ${{ env.somestate }}
-    #     # repo_token: ${{ secrets.GITHUB_TOKEN }} # Used for Github integrations (i.e. PR comments)
-    #     action: "upload"
-    #     ###### Repository/Build Configurations - These values can be configured to match your app requirements. ######
-    #     # For more information regarding Static Web App workflow configurations, please visit: https://aka.ms/swaworkflowconfig
-    #     app_location: "${{ github.workspace }}/Staging/AngularAppDirectory" # App source code path
-    #     api_location: "" # Api source code path - optional
-    #     skip_app_build: true
-    #     skip_api_build: true
-    #     config_file_location: ${{ github.workspace }}/Staging/AngularAppDirectory/assets
-    #     #output_location: "" # Built app content directory - optional
-    #     ###### End of Repository/Build Configurations ######
-
-    # # - name: Use the value
-    # #   id: step_two
-    # #   run: |
-    # #       echo "${{ env.somestate }}"
+      SWA-name: 'asgerthyregoddk-tst-swa'
 
   deploy-prod-infrastructure:
     needs: deploy-test-infrastructure
@@ -124,9 +81,10 @@ jobs:
         template: Bicep/main.bicep
         parameters: 'deploymentEnvironment=PRD'
 
-  deploy-prd-webapp:
+  deploy-prod-webapp:
+    name: Deploy Angular App to Test
     uses: ./.github/workflows/deployWebApp.jobs.yml
-    needs: [deploy-tst-webapp, deploy-prod-infrastructure]
+    needs: deploy-prod-infrastructure
     with:
       artifact-name: AngularApp
-      WEBHOOK_TOKEN: ${{ needs.deploy-prod-infrastructure.outputs.swa-token }}
+      SWA-name: 'asgerthyregoddk-prd-swa'

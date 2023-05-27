@@ -4,7 +4,7 @@ on:
       artifact-name:
         required: true
         type: string
-      WEBHOOK_TOKEN:
+      SWA-name:
         required: true
         type: string
 
@@ -13,11 +13,22 @@ jobs:
     runs-on: ubuntu-latest
     env:
       local-working-directory: ${{ github.workspace }}/Staging/AngularAppDirectory
+    outputs:
+      swa-token: ${{ steps.fetchSWAToken.outputs.deploymenttoken }}
     steps:
-      #- name: Masking inputs
-      #  run: |
-      #    swa-token=$(cat $GITHUB_EVENT_PATH | jq -r '.inputs.swa-token' )
-      #    echo "::add-mask::$swa-token"
+      - uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+          
+      - name: Fetch SWA Token
+        id: fetchSWAToken
+        uses: azure/CLI@v1
+        with: 
+            inlineScript: |
+                localdeploymentToken=$(az staticwebapp secrets list --name "${{ inputs.SWA-name }}" --query "properties.apiKey" -o tsv)
+                echo "::add-mask::$localdeploymentToken"
+                echo "deploymenttoken=$localdeploymentToken" >> "$GITHUB_OUTPUT"
+                echo "Fetched token."
 
       - name: Download a single artifact
         uses: actions/download-artifact@v3
@@ -29,7 +40,7 @@ jobs:
         id: builddeploy
         uses: Azure/static-web-apps-deploy@v1
         with:
-          azure_static_web_apps_api_token: ${{ inputs.WEBHOOK_TOKEN }}
+          azure_static_web_apps_api_token: ${{steps.fetchSWAToken.outputs.deploymenttoken}}
           action: "upload"
           app_location: ${{ env.local-working-directory }}
           api_location: ""
