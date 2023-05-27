@@ -1,0 +1,45 @@
+on:
+    workflow_call:
+      inputs:
+        artifact-name:
+          required: true
+          type: string
+        swa-token:
+          required: true
+          type: string
+
+jobs:
+    deploy-test-infrastructure:
+        name: Deploy infrastructure to Test
+        runs-on: ubuntu-latest
+        environment: TST
+        outputs:
+          swa-token: ${{ steps.fetchSWAToken.outputs.deploymenttoken }}
+        steps:
+    
+          # Checkout code
+        - uses: actions/checkout@main
+    
+          # Log into Azure
+        - uses: azure/login@v1
+          with:
+            creds: ${{ secrets.AZURE_CREDENTIALS }}
+    
+          # Deploy Bicep file
+        - name: Deploy Test Infrastructure
+          uses: azure/arm-deploy@v1
+          with:
+            subscriptionId: ${{ secrets.AZURE_SUBSCRIPTION }}
+            resourceGroupName: '${{ secrets.AZURE_RG }}-TST'
+            template: Bicep/main.bicep
+            parameters: 'deploymentEnvironment=TST'
+        
+        - name: Fetch SWA Token
+          id: fetchSWAToken
+          uses: azure/CLI@v1
+          with: 
+              inlineScript: |
+                  localdeploymentToken=$(az staticwebapp secrets list --name "asgerthyregoddk-tst-swa" --query "properties.apiKey" -o tsv)
+                  echo "::add-mask::$localdeploymentToken" 
+                  echo "deploymenttoken=$localdeploymentToken" >> "$GITHUB_OUTPUT"
+                  echo "Fetched token."

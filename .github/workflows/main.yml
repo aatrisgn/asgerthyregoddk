@@ -54,9 +54,9 @@ jobs:
       id: fetchSWAToken
       uses: azure/CLI@v1
       with: 
-          inlineScript: |
+          inlineScript: | #echo "::add-mask::$localdeploymentToken" 
               localdeploymentToken=$(az staticwebapp secrets list --name "asgerthyregoddk-tst-swa" --query "properties.apiKey" -o tsv)
-              echo "::add-mask::$localdeploymentToken" 
+              
               echo "deploymenttoken=$localdeploymentToken" >> "$GITHUB_OUTPUT"
               echo "Fetched token."
     
@@ -66,7 +66,7 @@ jobs:
     needs: deploy-test-infrastructure
     with:
       artifact-name: AngularApp
-      swa-token: ${{ needs.deploy-test-infrastructure.outputs.swa-token }}
+      WEBHOOK_TOKEN: ${{ needs.deploy-test-infrastructure.outputs.swa-token }}
 
     # - name: Download a single artifact
     #   uses: actions/download-artifact@v3
@@ -129,4 +129,4 @@ jobs:
     needs: [deploy-tst-webapp, deploy-prod-infrastructure]
     with:
       artifact-name: AngularApp
-      swa-token: ${{ needs.deploy-prod-infrastructure.outputs.swa-token }}
+      WEBHOOK_TOKEN: ${{ needs.deploy-prod-infrastructure.outputs.swa-token }}
