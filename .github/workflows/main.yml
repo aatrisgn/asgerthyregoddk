@@ -54,9 +54,11 @@ jobs:
     name: Deploy Angular App to Test
     uses: ./.github/workflows/deployWebApp.jobs.yml
     needs: deploy-test-infrastructure
+    secrets: inherit
     with:
       artifact-name: AngularApp
       SWA-name: 'asgerthyregoddk-tst-swa'
+      test-token: 'lalala'
 
   deploy-prod-infrastructure:
     needs: deploy-test-infrastructure
@@ -85,6 +87,8 @@ jobs:
     name: Deploy Angular App to Test
     uses: ./.github/workflows/deployWebApp.jobs.yml
     needs: [deploy-prod-infrastructure, deploy-tst-webapp]
+    secrets: inherit
     with:
       artifact-name: AngularApp
       SWA-name: 'asgerthyregoddk-prd-swa'
+      test-token: 'lalala'

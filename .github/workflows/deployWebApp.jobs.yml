@@ -7,6 +7,9 @@ on:
       SWA-name:
         required: true
         type: string
+    secrets:
+      testToken:
+        required: true
 
 jobs:
   build-angular-app:
@@ -16,6 +19,10 @@ jobs:
     outputs:
       swa-token: ${{ steps.fetchSWAToken.outputs.deploymenttoken }}
     steps:
+      - uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+          
       - name: Fetch SWA Token
         id: fetchSWAToken
         uses: azure/CLI@v1
@@ -25,6 +32,7 @@ jobs:
                 echo "::add-mask::$localdeploymentToken"
                 echo "deploymenttoken=$localdeploymentToken" >> "$GITHUB_OUTPUT"
                 echo "Fetched token."
+                echo "${{ secrets.testToken }}"
 
       - name: Download a single artifact
         uses: actions/download-artifact@v3
