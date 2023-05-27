@@ -1,16 +1,30 @@
-<div class="shadow-1-strong bg-white my-5 p-5" id="experience">
-    <div class="work-experience-section">
-      <h2 class="h2 fw-light mb-4">Work Experience</h2>
-      <div class="timeline">
-        <div *ngFor="let experience of parsedExperienceData" class="timeline-card timeline-card-info" data-aos="fade-in" data-aos-delay="0">
-            <div class="timeline-head px-4 pt-3">
-              <div class="h5">{{experience.Title}} <span class="text-muted h6">at {{experience.Subtitle}}</span></div>
+<mat-accordion>          
+  <div class="shadow-1-strong bg-white my-5 p-5" id="experience">
+    <div class="experience-section">
+      <div class="row">
+        <div class="col-md-12">
+          <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                <h2 class="h2 fw-light mb-4">Work Experience</h2>
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+            <div>
+              <div class="timeline">
+                <div *ngFor="let experience of parsedExperienceData" class="timeline-card timeline-card-info" data-aos="fade-in" data-aos-delay="0">
+                    <div class="timeline-head px-4 pt-3">
+                      <div class="h5">{{experience.Title}} <span class="text-muted h6">at {{experience.Subtitle}}</span></div>
+                    </div>
+                    <div class="timeline-body px-4 pb-4">
+                      <div class="text-muted text-small mb-3">{{experience.TimeSpan}}</div>
+                      <div>{{experience.Summary}}</div>
+                    </div>
+                  </div>
+              </div>
             </div>
-            <div class="timeline-body px-4 pb-4">
-              <div class="text-muted text-small mb-3">{{experience.TimeSpan}}</div>
-              <div>{{experience.Summary}}</div>
-            </div>
-          </div>
+          </mat-expansion-panel>
+        </div>
       </div>
     </div>
   </div>
+</mat-accordion>

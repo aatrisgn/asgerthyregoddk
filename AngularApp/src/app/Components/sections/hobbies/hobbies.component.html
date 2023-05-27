@@ -1,24 +1,35 @@
-<div class="shadow-1-strong bg-white my-5 p-5" id="about">
-    <div class="about-section">
+
+<mat-accordion>          
+  <div class="shadow-1-strong bg-white my-5 p-5" id="hobbies">
+    <div class="hobbies-section">
       <div class="row">
         <div class="col-md-12">
-          <h2 class="h2 fw-light mb-4">So, what gets me going?</h2>
-          <p>Now, you've read a bit about the "professional me", but is probably eager to learn more. Well, continue reading a little bit further and I'll provide an appetizer.</p>
-          <h3 class="h3 fw-light mb-4">More software</h3>
-          <p>Well, to no surprise I also spend a lot of my free time tinkering with software development and electronics. It is mostly having a problem I don't know how to solve and try to solve it. Once that is done, it is usually on to the next one.</p>
-          <p>Therefore, I have quite few things to show for it (I am however the proud owner of Regnerdet.nu - Translates to "Does it rain . now". I usually see my free time programming as sort of sudoku. Problem-solving while improving my skills.</p>
-          <h3 class="h3 fw-light mb-4" >Drinking beers</h3>
-          <p>I would guess to no surprise, I am also quite fond of having a beer (or 10) during the weekend. I've consumed enough beer to certainly say I kinda like it.</p>
-          <p>I am not so much of a fancy-drinks-kinda-guy, but more of a brown pub kinda guy. I do enjoy a special draft beer from time to time, but it usually depends on my mood.</p>
-          <h3 class="h3 fw-light mb-4" >Painting miniatures</h3>
-          <p>As with so many others, I found a long-forgotten love for painting miniatures during the Corona pandemic. I had been painting as a kid, but during the pandemic I needed to find something else to do, than sit in front of a screen the whole day.</p>
-          <p>For this, Warhammer was the poison I chose. I've tried playing a little bit of Kill Team (Playing with the miniatures), but it's mostly been painting.</p>
-          <h3 class="h3 fw-light mb-4" >American Football</h3>
-          <p>I am a huge fan of American Football. Unfortunately, I am a fan of the Atlanta Falcons. If you follow the sport, you'll know why that's quite unfortunate. Long story short; they are quite bad. But! I've been comitted for far too long to give up now.</p>
-          <p>They have to win some day, right? Right? RIGHT?!</p>
-          <h3 class="h3 fw-light mb-4">Handy-man</h3>
-          <p>Lastly, my wife and I have a summer house / vacation house (depending on how it's called in english) which is our never-ending DIY project. Luckily, we love it and the pleasure a well-finished project gives, is quite out of the ordinary.</p>
+          <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                <h2 class="h2 fw-light mb-4">Hobbies & Outside work</h2>
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+            <div>
+              <p>Now, you've read a bit about the "professional me", but is probably eager to learn more. Well, continue reading a little bit further and I'll provide an appetizer.</p>
+              <h3 class="h3 fw-light mb-4">More software</h3>
+              <p>Well, to no surprise I also spend a lot of my free time tinkering with software development and electronics. It is mostly having a problem I don't know how to solve and try to solve it. Once that is done, it is usually on to the next one.</p>
+              <p>Therefore, I have quite few things to show for it (I am however the proud owner of Regnerdet.nu - Translates to "Does it rain . now". I usually see my free time programming as sort of sudoku. Problem-solving while improving my skills.</p>
+              <h3 class="h3 fw-light mb-4" >Drinking beers</h3>
+              <p>I would guess to no surprise, I am also quite fond of having a beer (or 10) during the weekend. I've consumed enough beer to certainly say I kinda like it.</p>
+              <p>I am not so much of a fancy-drinks-kinda-guy, but more of a brown pub kinda guy. I do enjoy a special draft beer from time to time, but it usually depends on my mood.</p>
+              <h3 class="h3 fw-light mb-4" >Painting miniatures</h3>
+              <p>As with so many others, I found a long-forgotten love for painting miniatures during the Corona pandemic. I had been painting as a kid, but during the pandemic I needed to find something else to do, than sit in front of a screen the whole day.</p>
+              <p>For this, Warhammer was the poison I chose. I've tried playing a little bit of Kill Team (Playing with the miniatures), but it's mostly been painting.</p>
+              <h3 class="h3 fw-light mb-4" >American Football</h3>
+              <p>I am a huge fan of American Football. Unfortunately, I am a fan of the Atlanta Falcons. If you follow the sport, you'll know why that's quite unfortunate. Long story short; they are quite bad. But! I've been comitted for far too long to give up now.</p>
+              <p>They have to win some day, right? Right? RIGHT?!</p>
+              <h3 class="h3 fw-light mb-4">Handy-man</h3>
+              <p>Lastly, my wife and I have a summer house / vacation house (depending on how it's called in english) which is our never-ending DIY project. Luckily, we love it and the pleasure a well-finished project gives, is quite out of the ordinary.</p>
+            </div>
+          </mat-expansion-panel>
         </div>
       </div>
     </div>
   </div>
+</mat-accordion>

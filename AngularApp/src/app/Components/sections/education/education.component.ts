@@ -9,6 +9,7 @@ import { JsonParserService } from 'src/app/Services/JsonParserService';
   providers:[JsonParserService]
 })
 export class EducationComponent implements OnInit {
+  public panelOpenState: boolean = false;
   private _jsonParserService:JsonParserService;
 
   parsedEducationData: Array<experienceItem> = [];
@@ -20,7 +21,6 @@ export class EducationComponent implements OnInit {
   ngOnInit(): void {
     this.parsedEducationData = this._jsonParserService.PopulateParsedExperienceData(educationData);
   }
-
 }
 
 const educationData = [

@@ -7,13 +7,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AboutComponent implements OnInit {
 
-  emailAddress:string = "asger.thyregod@gmail.com";
-  yearsOfExperience:number;
-  age:number;
+  public emailAddress:string = "asger.thyregod@gmail.com";
+  public yearsOfExperience:number = 0;
+  public monthsOfExperience:number = 0;
+  public age:number;
 
   constructor() {
-    this.yearsOfExperience = this.calculateYearsOfExperience();
     this.age = this.calculateAge();
+    this.calculateYearsOfExperience();
   }
 
   ngOnInit(): void {
@@ -23,8 +24,8 @@ export class AboutComponent implements OnInit {
     return this.calculateYearsSinceDate("1994-04-26");
   }
 
-  private calculateYearsOfExperience() : number{
-    return this.calculateYearsSinceDate("2018-08-01");
+  private calculateYearsOfExperience() : void{
+    this.calculateYearsAndMonthSinceDate("2018-08-01");
   }
 
   private calculateYearsSinceDate(dateString:string) : number{
@@ -33,6 +34,16 @@ export class AboutComponent implements OnInit {
     let timeDifference = Math.abs(dateNow - birthDate);
     let age = Math.floor((timeDifference / (1000 * 3600 * 24))/365.25);
     return age;
+  }
+
+  private calculateYearsAndMonthSinceDate(dateString:string) : void{
+    let dateNow = Date.now();
+    let birthDate = new Date(dateString).getTime();
+    let timeDifference = Math.abs(dateNow - birthDate);
+    let months = Math.floor((timeDifference / (1000 * 3600 * 24))/30.5);
+    
+    this.yearsOfExperience = Math.floor(months / 12);
+    this.monthsOfExperience = months % 12;
   }
 
 }

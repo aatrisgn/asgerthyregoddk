@@ -9,9 +9,11 @@ import { JsonParserService } from 'src/app/Services/JsonParserService';
   providers:[JsonParserService]
 })
 export class CertificatesComponent implements OnInit {
-  private _jsonParserService:JsonParserService;
+  
+  public panelOpenState: boolean = false;
+  public parsedCertificateData: Array<experienceItem> = [];
 
-  parsedCertificateData: Array<experienceItem> = [];
+  private _jsonParserService:JsonParserService;
 
   constructor(private jsonParserService:JsonParserService) {
     this._jsonParserService = jsonParserService;

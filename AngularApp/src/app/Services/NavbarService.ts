@@ -6,6 +6,7 @@ export class NavbarService {
         new NavbarItem("experience"),
         new NavbarItem("education"),
         new NavbarItem("certificates"),
+        new NavbarItem("hobbies"),
         new NavbarItem("contact")
     ]
 

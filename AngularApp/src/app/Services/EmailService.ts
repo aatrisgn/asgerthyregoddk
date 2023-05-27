@@ -8,8 +8,6 @@ export class EmailService {
 
     SendEmail(emailContent:EmailContent):boolean{
         if(this.validateEmail(emailContent)){
-            //SendEmail
-
             return true;
         }
         return false;

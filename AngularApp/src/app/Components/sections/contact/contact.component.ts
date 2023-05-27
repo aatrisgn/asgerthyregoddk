@@ -1,5 +1,7 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component } from '@angular/core';
 import { EmailService } from 'src/app/Services/EmailService';
+import { FormGroup, FormControl, Validators } from '@angular/forms'
+import { EmailContent } from 'src/app/models/EmailContent';
 
 @Component({
   selector: 'section-contact',
@@ -10,14 +12,20 @@ import { EmailService } from 'src/app/Services/EmailService';
 export class ContactComponent {
   private _emailService:EmailService;
 
-  Test:string = "asdasd";
+  public reactiveForm = new FormGroup({
+    name: new FormControl('', [Validators.required]),
+    email: new FormControl(''),
+    message: new FormControl('')
+  })
 
   constructor(private emailService:EmailService) {
     this._emailService = emailService;
   }
 
   TrySendEmail(){
-    console.log(this.Test);
+    let formValues = this.reactiveForm.value;
+    let email = new EmailContent(formValues['name'], formValues['email'], formValues['message']);
+    this._emailService.SendEmail(email);
   }
 
 }

@@ -35,10 +35,17 @@
       border-color: var(--bs-red); }
   
   html {
-    scroll-behavior: smooth; }
+    scroll-behavior: smooth;
+  }
   
   html, body {
-    overflow-x: hidden; }
+    overflow-x: hidden;
+    background-color: #5e7e99;
+  }
+  
+  mat-panel-title h2 {
+    text-decoration: underline;
+  }
   
   .container {
     max-width: 1140px; }
@@ -142,5 +149,6 @@
       padding: 0 !important; }
     .page-break {
       padding-top: 5rem;
-      page-break-before: always; } }
+      page-break-before: always; } 
+    }
   

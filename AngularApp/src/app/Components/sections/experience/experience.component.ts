@@ -10,7 +10,8 @@ import { JsonParserService } from 'src/app/Services/JsonParserService';
   providers:[JsonParserService]
 })
 export class ExperienceComponent implements OnInit {
-  //Services
+  
+  public panelOpenState: boolean = false;
   private _jsonParserService:JsonParserService;
 
   parsedExperienceData: Array<experienceItem> = [];
@@ -73,11 +74,5 @@ const experienceData = [
     "SubTitle":"Oxfam Ibis",
     "Timespan":"Jan, 2017 - Jan, 2018",
     "Summary":"Assisted a grant manager implementing the global reporting standard IATI for NGO's."
-  },
-  {
-    "Title":"Cashier",
-    "SubTitle":"Amager Isenkræmmer",
-    "Timespan":"Nov, 2009 - okt, 2014",
-    "Summary":"Part-time cashier and general assistance at a local hardware store. This was my first stable job which I had for 5 years."
   }
 ]
