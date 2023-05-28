@@ -28,9 +28,24 @@ resource tableStorage 'Microsoft.Storage/storageAccounts/tableServices@2022-09-0
 }
 
 //Table
-resource tableStorageTable 'Microsoft.Storage/storageAccounts/tableServices/tables@2022-09-01' = {
+resource emailsTableStorageTable 'Microsoft.Storage/storageAccounts/tableServices/tables@2022-09-01' = {
   parent:tableStorage
-  name:'asgerthyregoddk'
+  name:'emails'
+}
+
+resource certificatesTableStorageTable 'Microsoft.Storage/storageAccounts/tableServices/tables@2022-09-01' = {
+  parent:tableStorage
+  name:'certificates'
+}
+
+resource experiencesTableStorageTable 'Microsoft.Storage/storageAccounts/tableServices/tables@2022-09-01' = {
+  parent:tableStorage
+  name:'experiences'
+}
+
+resource educationsTableStorageTable 'Microsoft.Storage/storageAccounts/tableServices/tables@2022-09-01' = {
+  parent:tableStorage
+  name:'educations'
 }
 
 output storageAccount object = {
