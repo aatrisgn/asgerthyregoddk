@@ -1,11 +1,13 @@
-﻿namespace TGC.Site.API.Models.Endpoints;
+﻿using TGC.Site.API.Models.DTOs;
 
-internal class EducationResponse
+namespace TGC.Site.API.Models.Endpoints;
+
+public class EducationResponse
 {
-	public string Title { get; set; }
-	public string SubTitle { get; set; }
-	public string Timespan { get; set; }
-	public string Summary { get; set; }
+	public string? Title { get; set; }
+	public string? SubTitle { get; set; }
+	public string? Timespan { get; set; }
+	public string? Summary { get; set; }
 
 	public EducationResponse(string title, string subTitle, string timeSpan, string summary)
 	{
@@ -13,5 +15,13 @@ internal class EducationResponse
 		SubTitle = subTitle;
 		Timespan = timeSpan;
 		Summary = summary;
+	}
+
+	public EducationResponse(EducationItem c)
+	{
+		Title = c.Title;
+		SubTitle = c.SubTitle;
+		Timespan = c.Timespan;
+		Summary = c.Summary;
 	}
 }

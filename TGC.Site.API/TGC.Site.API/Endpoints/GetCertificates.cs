@@ -1,34 +1,38 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Azure.WebJobs;
-using Microsoft.Azure.WebJobs.Extensions.Http;
+using Microsoft.Azure.Functions.Worker;
 using Microsoft.Azure.WebJobs.Extensions.OpenApi.Core.Attributes;
-using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using TGC.AzureTableStorage;
+using TGC.Site.API.Models.DTOs;
 using TGC.Site.API.Models.Endpoints;
 
 namespace TGC.Site.API.Endpoints;
 
 public class GetCertificates
 {
-	private readonly ILogger<GetCertificates> _logger;
+	private readonly IAzureTableStorageRepository<CertificateItem> _azureTableStorageRepository;
 
-	public GetCertificates(ILogger<GetCertificates> log)
+	public GetCertificates(IAzureTableStorageRepository<CertificateItem> azureTableStorageRepository)
 	{
-		_logger = log;
+		_azureTableStorageRepository = azureTableStorageRepository;
 	}
 
-	[FunctionName("GetCertificates")]
+	[Function("GetCertificates")]
 	[OpenApiOperation(operationId: "GetCertificates", tags: new[] { "Certficates" })]
-	[OpenApiResponseWithBody(statusCode: HttpStatusCode.OK, contentType: "application/json", bodyType: typeof(IEnumerable<EducationResponse>), Description = "The OK response")]
-	public async Task<IActionResult> Run(
+	[OpenApiResponseWithBody(statusCode: HttpStatusCode.OK, contentType: "application/json", bodyType: typeof(IEnumerable<CertificateResponse>), Description = "The OK response")]
+	public async Task<IEnumerable<CertificateResponse>> Run(
 		[HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "Certficates")] HttpRequest req)
 	{
-		_logger.LogInformation("C# HTTP trigger function processed a request.");
-		return new OkObjectResult("OK");
+		var certifacteResponse = new List<CertificateResponse>();
+		var certificatesDTOs = _azureTableStorageRepository.QueryAsync(c => c.Title != "").ToBlockingEnumerable();
+
+		certifacteResponse.AddRange(certificatesDTOs.Select(c => new CertificateResponse(c)));
+
+		return certifacteResponse;
 	}
 }
 
